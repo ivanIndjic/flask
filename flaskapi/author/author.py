@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, make_response, flash
+from flask import Blueprint, render_template, request, jsonify, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .marshmallow import AuthorSchema
@@ -39,6 +39,8 @@ def login():
 @author_app.route('/', methods=['GET'])
 def get_all_authors():
     authors = AuthorSchema(many=True)
+    a = Author.query.first()
+    print(a.posts)
     return make_response(
         jsonify(json_list=authors.dump(Author.query.all())), 200)
 
@@ -50,20 +52,20 @@ def create_author():
     author.password = generate_password_hash(author.password)
     already_exists = Author.query.filter_by(email=author.email).first()
     if already_exists:
-        return make_response('Already exists', 409)
+        return make_response('Already exists', 404)
     db.session.add(author)
     db.session.commit()
     author_marshmallow = AuthorSchema()
 
     return make_response(jsonify(
-        json_list=author_marshmallow.dump(author)))
+        json_list=author_marshmallow.dump(author)), 200)
 
 
 @author_app.route('/delete/<int:id>', methods=['DELETE'])
 def delete_author(id: int):
     author = Author.query.filter_by(id=id).first()
     if author:
-        Author.query.filter_by(id=id).delete()
+        db.session.delete(author)
         db.session.commit()
         return make_response('Resource deleted successfully', 200)
     return make_response('Resource not found', 404)

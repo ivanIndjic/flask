@@ -4,9 +4,11 @@ from ..post.models import Post
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), unique=True)
-    posts = db.relationship('Post', backref='blog',
+    title = db.Column(db.String(200), unique=True)
+    posts = db.relationship('Post', backref='blog_id',
                             lazy='select')
 
+    def __init__(self, title: str):
+        self.title = title
 
 

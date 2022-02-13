@@ -7,7 +7,7 @@ class Author(db.Model):
     full_name = db.Column(db.String(90))
     email = db.Column(db.String(40), unique=True)
     password = db.Column(db.String(256))
-    posts = db.relationship('Post', backref='author', lazy='select')
+    posts = db.relationship('Post', backref='author_id', lazy='select')
 
     def __init__(self, full_name, email, password):
         self.full_name = full_name

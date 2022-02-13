@@ -22,6 +22,6 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        context: flaskapi
+        context: .
         push: true
         tags: ivanindjic/flaskapi:latest

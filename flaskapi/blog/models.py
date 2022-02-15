@@ -8,7 +8,8 @@ class Blog(db.Model):
     posts = db.relationship('Post', backref='blog_id',
                             lazy='select')
 
-    def __init__(self, title: str):
+    def __init__(self, title: str, posts: [Post] = []):
         self.title = title
+        self.posts = posts
 
 

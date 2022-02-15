@@ -14,7 +14,6 @@ def create_app(**config_overrides) -> Flask:
 
     app = Flask(__name__)
     app.config.from_pyfile('settings.py')
-    print(app.config['SECRET_KEY'])
     db.init_app(app)
     jwt = JWT(app, authenticate, identity)
     migrate = Migrate(app, db, compare_type=True)

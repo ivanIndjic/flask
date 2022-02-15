@@ -40,7 +40,6 @@ def login():
 def get_all_authors():
     authors = AuthorSchema(many=True)
     a = Author.query.first()
-    print(a.posts)
     return make_response(
         jsonify(json_list=authors.dump(Author.query.all())), 200)
 

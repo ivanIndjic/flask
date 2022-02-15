@@ -11,7 +11,6 @@ blog = Blueprint('blog', __name__, url_prefix='/blog')
 
 
 @blog.route('/', methods=['GET'])
-@jwt_required()
 def get_all_blogs():
     print(request.headers)
     blogs = BlogSchema(many=True)

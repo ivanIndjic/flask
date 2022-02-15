@@ -1,4 +1,4 @@
-FROM python:3.9-bullseye
+FROM python:3.8.12-bullseye
 WORKDIR /app
 COPY . /app
 RUN pip install poetry && \

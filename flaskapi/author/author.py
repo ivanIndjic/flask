@@ -85,4 +85,3 @@ def update_author(id: int):
         author_marshmallow = AuthorSchema()
         return make_response(jsonify(fields=author_marshmallow.dump(old_author)), 200)
     return make_response('Resource not found', 404)
-

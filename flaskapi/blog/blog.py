@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response
+from flask_jwt import jwt_required
 
 from .models import Blog
 from .marshmallow import BlogSchema
@@ -6,15 +7,17 @@ from ..application import db
 
 blog = Blueprint('blog', __name__, url_prefix='/blog')
 
-
 @blog.route('/', methods=['GET'])
+@jwt_required()
 def get_all_blogs():
+    print(request.headers)
     blogs = BlogSchema(many=True)
     return make_response(jsonify(
         blogs=blogs.dump(Blog.query.all())), 200)
 
 
 @blog.route('/create', methods=['POST'])
+@jwt_required()
 def create_blog():
     new_blog = request.get_json(force=True)
     new_blog = Blog(**new_blog)
@@ -29,6 +32,7 @@ def create_blog():
 
 
 @blog.route('/delete/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_blog(id: int):
     blog = Blog.query.filter_by(id=id).first()
     if blog:
@@ -39,6 +43,7 @@ def delete_blog(id: int):
 
 
 @blog.route('/update/<int:id>', methods=['PUT'])
+@jwt_required()
 def update_blog(id: int):
     request_blog = request.get_json(force=True)
     blog_updated = Blog(**request_blog)

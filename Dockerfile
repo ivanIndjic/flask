@@ -1,4 +1,5 @@
 FROM python:3.8.12-bullseye
+LABEL author="IvanIndjic"
 WORKDIR /app
 COPY . /app
 RUN pip install poetry && \

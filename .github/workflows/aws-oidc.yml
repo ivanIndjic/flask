@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: AWS OIDC Example
 env:
   AWS_REGION: "eu-west-1"
 on:
